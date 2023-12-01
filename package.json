@@ -1,0 +1,30 @@
+{
+  "name": "aoc",
+  "version": "1.0.0",
+  "description": "Advent of Code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bananabread08/aoc.git"
+  },
+  "author": "bananabread08",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bananabread08/aoc/issues"
+  },
+  "homepage": "https://github.com/bananabread08/aoc#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.10.1",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1",
+    "eslint": "^8.54.0",
+    "eslint-config-prettier": "^9.0.0",
+    "prettier": "^3.1.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2"
+  }
+}
