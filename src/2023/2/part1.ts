@@ -1,29 +1,26 @@
 import { getData } from '../getdata';
 
 type Color = 'red' | 'blue' | 'green';
-type Cube = {
+type CubeSet = {
   [K in Color]: number;
 };
 
-const limit: Cube = { red: 12, green: 13, blue: 14 };
-
 function solve(file: string) {
+  const limit: CubeSet = { red: 12, green: 13, blue: 14 };
   const games = getData(2, file).split('\n');
   return games.reduce((total, game, index) => {
-    const bool = game
-      .substring(game.indexOf(':') + 2)
+    const resultPerGame = game
+      .split(': ')[1]
       .split('; ')
-      .every((set) => {
-        const obj: Cube = { red: 0, blue: 0, green: 0 };
-        return set.split(', ').every((cube) => {
-          const split = cube.split(' ');
-          const v = split[0];
-          const k = split[1] as Color;
-          obj[k] = { ...obj }[k] + parseInt(v);
-          return limit.green >= obj.green && limit.red >= obj.red && limit.blue >= obj.blue;
+      .map((set) => {
+        const cube = set.split(', ');
+        return cube.every((pull) => {
+          const [count, color] = pull.split(' ') as [string, keyof CubeSet];
+          return limit[color] >= +count;
         });
-      });
-    return bool ? (total = total + index + 1) : total;
+      })
+      .every((s) => s);
+    return resultPerGame ? (total = total + index + 1) : total;
   }, 0);
 }
 
