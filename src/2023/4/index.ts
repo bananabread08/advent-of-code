@@ -7,10 +7,9 @@ function getMatches(card: string) {
   return extractNums(right).filter((n) => winningNums.includes(n));
 }
 
-function solvePartOne(file: string) {
-  const matches = getData(4, file).split('\n').map(getMatches);
-  return matches.reduce((total, wins) => (wins.length ? total + 2 ** (wins.length - 1) : total), 0);
-}
+const sum = (total = 0, wins: string[]) => (wins.length ? total + 2 ** (wins.length - 1) : total);
+
+const solvePartOne = (file: string) => getData(4, file).split('\n').map(getMatches).reduce(sum, 0);
 
 function solvePartTwo(file: string) {
   const lines = getData(4, file).split('\n');
