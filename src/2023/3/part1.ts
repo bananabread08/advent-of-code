@@ -20,11 +20,11 @@ const getAllMatches = (lines: string[], nums: Match[] = [], specials: SpecialMat
       const end = start + match[0].length - 1;
       nums.push({ num: parseInt(match[0]), start, end, line: index });
     });
-    chars.map((match) => {
-      if (!match) return;
-      const start = match?.index as number;
-      specials.push({ start, line: index, maxX, maxY: line.length });
-    });
+    chars.map(
+      (match) =>
+        match &&
+        specials.push({ start: match?.index as number, line: index, maxX, maxY: line.length }),
+    );
   });
   return [nums, specials];
 };
