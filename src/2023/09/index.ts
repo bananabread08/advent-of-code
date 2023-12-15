@@ -1,4 +1,4 @@
-import { getData } from '../getdata';
+import { getFileData } from '../getdata';
 
 // a reimagined solution based on help threads online.
 
@@ -25,7 +25,7 @@ function parseInput(lines: string[]) {
 }
 
 function solve(file: string) {
-  const input = getData(9, file).split('\n');
+  const input = getFileData(file).split('\n');
   const data = parseInput(input);
 
   const part1 = getTotal(data);

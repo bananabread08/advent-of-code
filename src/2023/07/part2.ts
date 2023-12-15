@@ -1,16 +1,4 @@
-import { getData } from '../getdata';
-
-/**
- * <========= strongest to weakest =======>
- * A, K, Q, J, T, 9, 8, 7, 6, 5, 4, 3, 2
- * AAAAA
- * AAAAT
- * AAATT
- * AAAxy
- * AATTx
- * AAxyz
- * vwxyz
- */
+import { getFileData } from '../getdata';
 
 interface IHash {
   [v: string]: number;
@@ -41,8 +29,21 @@ const checkHandType = (hand: string) => {
   }
 };
 
+function checkHandType2(hand: string) {
+  if (hand.indexOf('J') > -1) {
+    return Math.max(
+      ...[...new Set(hand)].map((letter) => checkHandType(hand.replaceAll('J', letter))),
+    );
+  }
+  return checkHandType(hand);
+}
+function parseLine(line: string): TLine {
+  const [hand, bet] = line.split(' ');
+  return [hand, +bet, checkHandType2(hand)];
+}
+
 const sortByRank = (a: TLine, b: TLine) => {
-  const ranks = '23456789TJQKA';
+  const ranks = 'J23456789TQKA';
   if (a[2] !== b[2]) return a[2] - b[2];
   if (a[2] === b[2]) {
     for (let i = 0; i < 5; i++) {
@@ -53,15 +54,14 @@ const sortByRank = (a: TLine, b: TLine) => {
   return 0;
 };
 
-const parseLine = (line: string): TLine => {
-  const [hand, bet] = line.split(' ');
-  return [hand, +bet, checkHandType(hand)];
-};
-
 function solve(file: string) {
-  const input = getData(7, file).split('\n').map(parseLine);
+  const input = getFileData(file).split('\n').map(parseLine);
   const sorted = input.sort(sortByRank);
+  console.log(sorted);
   return sorted.reduce((acc, curr, index) => acc + curr[1] * (index + 1), 0);
 }
 
+console.log(solve('test.txt'));
 console.log(solve('input.txt'));
+//251773524 high
+//251731742 high

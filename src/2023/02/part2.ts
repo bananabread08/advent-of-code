@@ -1,4 +1,4 @@
-import { getData } from '../getdata';
+import { getFileData } from '../getdata';
 
 type Color = 'red' | 'blue' | 'green';
 type CubeSet = {
@@ -6,7 +6,7 @@ type CubeSet = {
 };
 
 function solvePartTwo(file: string) {
-  const games = getData(2, file).split('\n');
+  const games = getFileData(file).split('\n');
   return games.reduce((total, game) => {
     const max: CubeSet = { red: 0, blue: 0, green: 0 };
     game

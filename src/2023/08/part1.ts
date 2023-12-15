@@ -1,4 +1,4 @@
-import { getData } from '../getdata';
+import { getFileData } from '../getdata';
 
 const getNextNode = (
   currentNode: string,
@@ -16,7 +16,7 @@ const getNextNode = (
 };
 
 function solve(file: string) {
-  const input = getData(8, file);
+  const input = getFileData(file);
   const blocks = input.split('\n\n');
   const AtoZ = /[A-Z]{3}/g;
   const directions = blocks[0];

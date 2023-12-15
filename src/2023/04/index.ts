@@ -1,4 +1,4 @@
-import { getData } from '../getdata';
+import { getFileData } from '../getdata';
 
 function getMatches(card: string) {
   const extractNums = (str: string) => [...str.matchAll(/\d+/g)].map((r) => r[0]);
@@ -9,10 +9,10 @@ function getMatches(card: string) {
 
 const sum = (total = 0, wins: string[]) => (wins.length ? total + 2 ** (wins.length - 1) : total);
 
-const solvePartOne = (file: string) => getData(4, file).split('\n').map(getMatches).reduce(sum, 0);
+const solvePartOne = (file: string) => getFileData(file).split('\n').map(getMatches).reduce(sum, 0);
 
 function solvePartTwo(file: string) {
-  const lines = getData(4, file).split('\n');
+  const lines = getFileData(file).split('\n');
   const copies = Array(lines.length).fill(1);
   return lines.map(getMatches).reduce((total, wins, idx) => {
     for (let i = 0; i < wins.length; i++) copies[i + idx + 1] += copies[idx];

@@ -1,4 +1,4 @@
-import { getData } from '../getdata';
+import { getFileData } from '../getdata';
 
 type Color = 'red' | 'blue' | 'green';
 type CubeSet = {
@@ -7,7 +7,7 @@ type CubeSet = {
 
 function solve(file: string) {
   const limit: CubeSet = { red: 12, green: 13, blue: 14 };
-  const games = getData(2, file).split('\n');
+  const games = getFileData(file).split('\n');
   return games.reduce((total, game, index) => {
     const resultPerGame = game
       .split(': ')[1]

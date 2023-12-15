@@ -1,4 +1,4 @@
-import { getData } from '../getdata';
+import { getFileData } from '../getdata';
 
 interface Mapping {
   destStart: number;
@@ -11,7 +11,7 @@ function parseInput(): {
   seeds: number[];
   mapMatrix: Mapping[][];
 } {
-  const lines = getData(5, 'input.txt').trim().split('\n\n');
+  const lines = getFileData('input.txt').trim().split('\n\n');
   const seeds = lines.shift()!.split(':')[1].trim().split(' ').map(Number);
   const mapMatrix = lines.map((line) =>
     line

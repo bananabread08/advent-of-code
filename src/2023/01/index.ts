@@ -1,10 +1,10 @@
-import { getData } from '../getdata';
+import { getFileData } from '../getdata';
 
 // oneight1 => 181
 // twoneight => 218
 
 function solve(file: string, isPartTwo: boolean) {
-  const arr = getData(1, file).split('\n');
+  const arr = getFileData(file).split('\n');
   const digitWords = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
 
   const getFirstAndLastValue = (line: string) => {

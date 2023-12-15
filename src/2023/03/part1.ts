@@ -1,25 +1,24 @@
-import { getData } from '../getdata';
+import { getFileData } from '../getdata';
 // @#$%&*+-=/
-type Match = { num: number; coords: { x: number; y: number }[] };
-type SpecialMatch = { start: number; line: number; maxX: number; maxY: number };
+type Match = {
+  num: number;
+  start: number;
+  end: number;
+  line: number;
+};
+
+type SpecialMatch = Pick<Match, 'start' | 'line'> & { maxX: number; maxY: number };
 
 const getAllMatches = (lines: string[], nums: Match[] = [], specials: SpecialMatch[] = []) => {
   const maxX = lines.length;
   lines.map((line, index) => {
     const numbers = [...line.matchAll(/(\d+)/g)];
-    const chars = [...line.matchAll(/[*]/g)];
+    const chars = [...line.matchAll(/[@#$%&*+\-=/]/g)];
     numbers.map((match) => {
       if (!match) return;
       const start = match?.index as number;
       const end = start + match[0].length - 1;
-      nums.push({
-        num: parseInt(match[0]),
-        coords: [
-          { x: index, y: start },
-          { x: index, y: start + 1 },
-          { x: index, y: end },
-        ],
-      });
+      nums.push({ num: parseInt(match[0]), start, end, line: index });
     });
     chars.map(
       (match) =>
@@ -49,31 +48,28 @@ const getTargetIndices = (char: SpecialMatch) => {
 };
 
 function solve(file: string) {
-  const lines = getData(3, file).split('\n');
+  const lines = getFileData(file).split('\n');
   const [nums, specials] = getAllMatches(lines) as [Match[], SpecialMatch[]];
 
-  const targets = specials
-    .map((char) => {
-      return getTargetIndices(char);
-    })
-    .map((target) => {
-      const match: number[] = [];
-      nums.map((num) => {
-        num.coords.map((coord) => {
-          if (target.some((t) => t[0] === coord.x && t[1] === coord.y)) {
-            if (!match.includes(num.num)) {
-              match.push(num.num);
-            }
-          }
-        });
-      });
-      return match;
-    });
+  const targets = specials.map((char) => {
+    return getTargetIndices(char);
+  });
 
-  return targets.reduce((total, curr) => {
-    if (curr.length > 1) {
-      total = total + curr[0] * curr[1];
-    }
+  return targets.reduce((total, target) => {
+    const match: number[] = [];
+    nums.map((num) => {
+      for (let i = num.start; i <= num.end; i++) {
+        if (
+          target.some((t) => {
+            return t[0] === num.line && t[1] === i;
+          })
+        )
+          if (!match.includes(num.num)) {
+            total = total + num.num;
+            return total;
+          } else return total;
+      }
+    });
     return total;
   }, 0);
 }

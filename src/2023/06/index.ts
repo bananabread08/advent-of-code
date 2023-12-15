@@ -1,4 +1,4 @@
-import { getData } from '../getdata';
+import { getFileData } from '../getdata';
 
 /**
  * t = max time, b = button hold time, d = distance.
@@ -23,7 +23,7 @@ function getPossibleRecords(dist: number[]) {
 }
 
 function solve(file: string) {
-  const input = getData(6, file).split('\n');
+  const input = getFileData(file).split('\n');
   const [time, dist] = input.map((line) => extractNums(line));
   const part1 = time.map(getPossibleRecords(dist)).reduce((acc, curr) => acc * curr);
   const part2 = [parseInt(time.join(''))]

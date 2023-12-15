@@ -1,4 +1,4 @@
-import { getData } from '../getdata';
+import { getFileData } from '../getdata';
 
 function getPredictions(history: number[][]) {
   if (history[history.length - 1].every((val) => val === 0)) return history;
@@ -12,7 +12,7 @@ function getPredictions(history: number[][]) {
 }
 
 function solve(file: string) {
-  const input = getData(9, file).split('\n');
+  const input = getFileData(file).split('\n');
   const histories = input.map((line) => line.split(' ').map((n) => parseInt(n)));
   const predictions = histories.map((history) => getPredictions([history]));
   const nextValues = predictions.map((prediction) =>
